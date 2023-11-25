@@ -20,15 +20,15 @@ public class GetUsers extends Utils {
 	@Given("setting headers")
 	public void setting_headers() throws IOException {
 
-		request = loadingHeader(token);
+		request = loadingHeader();
 	}
 
-	@When("user send the get request using {string}")
-	public void user_send_the_get_request_using(String resource) throws IOException {
+	@When("user send the {string} request using {string}")
+	public void user_send_the_request_using(String method, String resource) throws IOException {
 
-		ApiResources apiresource = ApiResources.valueOf(resource);
+		//ApiResources apiresource = ApiResources.valueOf(resource);
 
-		response = request.when().get(apiresource.getResource()).then().extract().response();
+		response = LoadingResourceWithRequestMethods(request, method, resource).then().extract().response();
 
 	}
 

@@ -22,16 +22,16 @@ public class BaseCurrencyApi extends Utils {
 	public void user_should_get_token_from_set_token_to_header(String key, String resource) throws IOException {
 		token = loginAuthentication();
 
-		 request = loadingHeader(token);
+		 request = loadingHeader();
 	}
 
 	@When("user sents {string} request for {string}")
 	public void user_sents_request_for(String method, String resource) throws IOException {
-		apiresources= ApiResources.valueOf(resource);
-	    response= request.when().get(apiresources.getResource()).then().extract().response();
+//		apiresources= ApiResources.valueOf(resource);
+	    response= LoadingResourceWithRequestMethods(request, method, resource).then().extract().response();
 	}
 
-	@Then("statucode is {int}")
+	@Then("statuscode is {int}")
 	public void statucode_is(int actualCode) {
 		System.out.println(response.statusCode());
 		assertingStatusCode(response,actualCode);

@@ -20,7 +20,7 @@ public class Utils {
 	public String getGlobalProperty(String value) throws IOException {
 		Properties prop = new Properties();
 		FileInputStream ips = new FileInputStream(
-				"C:\\Users\\Vinay M\\eclipse-workspace\\TraccarApiAutomation\\src\\test\\java\\Resources\\global.properties");
+				"C:\\Users\\Vinay\\eclipse-workspace\\Restassured_CucumberFramework-main.zip_expanded\\Restassured_CucumberFramework-main\\TraccarApiAutomation\\src\\test\\java\\Resources\\global.properties");
 		prop.load(ips);
 		return prop.getProperty(value);
 	}
@@ -81,11 +81,33 @@ public class Utils {
 		assertEquals(expectedValue, getJsonPathData(response, key));
 	}
 
-	public RequestSpecification loadingHeader(String bearertoken) throws IOException {
-		if (token == null) {
-			token = loginAuthentication();
-		}
-		RequestSpecification request = given().spec(requestSpecification()).header("Authorization", bearertoken);
+	public RequestSpecification loadingHeader() throws IOException {
+//		if (token == null) {
+//			token = loginAuthentication();
+//		}
+		token= loginAuthentication();
+		RequestSpecification request = given().spec(requestSpecification()).header("Authorization", token);
 		return request;
 	}
+	
+	public Response LoadingResourceWithRequestMethods(RequestSpecification request,String method,String resource) {
+		Response loadedMethods = null;
+		ApiResources apiresource = ApiResources.valueOf(resource);
+	if(method.equalsIgnoreCase("get"))
+	{
+		 loadedMethods = request.when().get(ApiResources.valueOf(resource).getResource());
+		
+	} else if (method.equalsIgnoreCase("post")) {
+		 loadedMethods = request.when().post(ApiResources.valueOf(resource).getResource());
+		
+	} else if(method.equalsIgnoreCase("delete")) {
+		 loadedMethods = request.when().post(ApiResources.valueOf(resource).getResource());
+		
+	}
+	
+	return loadedMethods;
+	
+	
+	
+}
 }

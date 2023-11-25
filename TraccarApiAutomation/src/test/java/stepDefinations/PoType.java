@@ -24,15 +24,13 @@ public class PoType extends Utils {
 	@Given("user  should get {string} token from {string} set token to header")
 	public void user_should_get_token_from_set_token_to_header(String key, String resource) throws IOException {
 
-		request = loadingHeader(token);
+		request = loadingHeader();
 	}
 
 	@When("user should sents {string} request for {string}")
 	public void user_should_sents_request_for(String method, String resource) throws IOException {
 
-		apiresources = ApiResources.valueOf(resource);
-		response = request.when()
-				.get(apiresources.getResource()).then().extract().response();
+		response = LoadingResourceWithRequestMethods(request, method, resource).then().extract().response();
 	}
 
 	@Then("the statuscode is {int}")

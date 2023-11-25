@@ -23,17 +23,16 @@ public class CurrentApi extends Utils{
 	@Given("get {string} token from {string} set token to header")
 	public void get_token_from_set_token_to_header(String key, String resource) throws IOException {
 
-		request = loadingHeader(token);
+		request = loadingHeader();
 	}
 
 	@When("sending {string} with {string} request")
 	public void sending_with_request(String resource, String method) throws IOException {
 	    // Write code here that turns the phrase above into concrete actions
-		String bearer= "Bearer "+token;
-		System.out.println(bearer);
 		
-		apiresources=ApiResources.valueOf(resource);
-	 response=  request.when().get(apiresources.getResource())
+		
+		
+	 response= LoadingResourceWithRequestMethods(request, method, resource)
 			 .then().extract().response();
 	   System.out.println(response.getBody().asPrettyString());
 	}
